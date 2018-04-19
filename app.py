@@ -17,8 +17,10 @@ class S(BaseHTTPRequestHandler):
     def do_GET(self):
         logging.info("GET request,\nPath: %s\nHeaders:\n%s\n", str(self.path), str(self.headers))
         self._set_response()
-        self.wfile.write("GET request for {}".format(self.path).encode('utf-8'))
-        self.wfile.write("\n------ ENVIRONMENT ------\n".encode('utf-8'))
+        self.wfile.write("GET: {}\n\n".format(self.path).encode('utf-8'))
+        self.wfile.write("------ HEADERS ------\n".encode('utf-8'))
+        self.wfile.write(str(self.headers).encode('utf-8'))
+        self.wfile.write("------ ENVIRONMENT ------\n".encode('utf-8'))
         for param in os.environ.keys():
             self.wfile.write(str(param + "=" + os.environ[param] + "\n").encode('utf-8'))
 
@@ -29,8 +31,10 @@ class S(BaseHTTPRequestHandler):
                 str(self.path), str(self.headers), post_data.decode('utf-8'))
 
         self._set_response()
-        self.wfile.write("POST request for {}".format(self.path).encode('utf-8'))
-        self.wfile.write("\n------\nENVIRONMENT:\n".encode('utf-8'))
+        self.wfile.write("POST: {}\n\n".format(self.path).encode('utf-8'))
+        self.wfile.write("------ HEADERS ------\n".encode('utf-8'))
+        self.wfile.write(str(self.headers).encode('utf-8'))
+        self.wfile.write("------ ENVIRONMENT ------\n".encode('utf-8'))
         for param in os.environ.keys():
             self.wfile.write(str(param + "=" + os.environ[param] + "\n").encode('utf-8'))
     
